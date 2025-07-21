@@ -528,6 +528,7 @@ CONTROLSLOTS=1
 GET=giantbeetle
 NAME=#//a fire beetle
 ID=0x00a9
+SKIN=0x0489
 STR=150 300
 DEX=66 100
 INT=500
