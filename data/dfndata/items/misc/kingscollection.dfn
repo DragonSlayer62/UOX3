@@ -1,0 +1,59 @@
+[firepaintingdeed]
+{
+get=base_item
+name=a fire painting deed
+id=0x14F0
+script=5608
+decay=1
+custominttag=addondeed 2
+}
+
+[embroideredtapestrydeed]
+{
+get=base_item
+name=a Embroidered Tapestry deed
+id=0x14F0
+script=5608
+decay=1
+custominttag=addondeed 3
+}
+
+[15thanniversarylithographdeed]
+{
+get=base_item
+name=a 15th Anniversary Lithograph deed
+id=0x14F0
+script=5608
+decay=1
+custominttag=addondeed 4
+}
+
+[alchemistsbookshelfdeed]
+{
+get=base_item
+name=a alchemist bookcase deed
+id=0x14F0
+script=5608
+decay=1
+custominttag=addondeed 5
+}
+
+[bulltapestrydeed]
+{
+get=base_item
+name=a bull tapestry deed
+id=0x14F0
+script=5608
+decay=1
+custominttag=addondeed 6
+}
+
+[fourpostbeeddeed]
+{
+get=base_item
+name=a four post bed deed
+id=0x14F0
+script=5608
+decay=1
+custominttag=addondeed 7
+}
