@@ -3,7 +3,6 @@
 
 var TF_WALL     = 4;
 var TF_BLOCKING = 6;
-var TF_ROOF     = 28;
 
 /** @type { (  user: Character, iUsing: Item  ) => boolean } */
 function onUseChecked( pUser, iUsed )
@@ -152,13 +151,6 @@ function onCallback0( socket, myTarget )
 	var targY = socket.GetWord( 13 );
 	var targZ = socket.GetSByte( 16 );
 
-	// NEW: do not allow placing directly on static wall tiles
-	if (IsBadStaticPlacementSpot(targX, targY, targZ, pUser.worldnumber))
-	{
-		socket.SysMessage("You cannot place that on a wall.");
-		return;
-	}
-
 	var iMulti = FindMulti( targX, targY, targZ, pUser.worldnumber );
 	if( !ValidateObject( iMulti ) || iMulti.IsBoat(  ) || !iMulti.IsInMulti( pUser ) )
 	{
@@ -283,16 +275,10 @@ function onCallback0( socket, myTarget )
 		var py = targY + dy;
 		var pz = targZ + dz;
 
-		if (IsBadStaticPlacementSpot(px, py, pz, pUser.worldnumber))
+		// Blocked-location check (prevents "through wall" placement)
+		if( IsLocationBlockedForAddon(px, py, pz, pUser.worldnumber, pUser.instanceID ))
 		{
-			socket.SysMessage("You cannot place that there.");
-			DeleteCreated(created);
-			return;
-		}
-
-		if (IsBadAddonComponentTile(id, definition))
-		{
-			socket.SysMessage("That addon component uses a wall/blocked tile ID. Fix the definition.");
+			socket.SysMessage( GetDictionaryEntry( 9097, socket.language )); // You cannot place this house-addon there, location is blocked!
 			DeleteCreated(created);
 			return;
 		}
@@ -329,36 +315,24 @@ function onCallback0( socket, myTarget )
 	iUsed.Delete(  );
 }
 
-function IsBadStaticPlacementSpot(x, y, z, world)
+function IsLocationBlockedForAddon(x, y, z, world, instance, ignoreObj)
 {
-	// Don’t place *on* static walls (and optionally other blockers)
-	if (CheckStaticFlag(x, y, z, world, 4))  // TF_WALL
+	// Block if dynamic items/doors/walls/etc mark this tile blocking
+	// (This matches your C++ intent closely)
+	if (CheckDynamicFlag(x, y, z, world, instance, TF_BLOCKING))
 		return true;
 
-	// Optional hardening (uncomment if you want stricter blocking)
-	// if (CheckStaticFlag(x, y, z, world, 6))  // TF_BLOCKING
-	// 	return true;
-
-	// if (CheckStaticFlag(x, y, z, world, 28)) // TF_ROOF
-	// 	return true;
-
-	return false;
-}
-
-function IsBadAddonComponentTile(tileID, definition)
-{
-	// If definition explicitly allows wall tiles, skip.
-	// (Use this for true wall-hung art that has TF_WALL)
-	if (definition && definition.allowWallTiles)
-		return false;
-
-	// Block wall tiles as addon components by default
-	if (CheckTileFlag(tileID, TF_WALL))
+	// Also block if statics at this exact Z are blocking (optional but good)
+	if (CheckStaticFlag(x, y, z, world, TF_BLOCKING))
 		return true;
 
-	// Optional: also block impassables
-	// if (CheckTileFlag(tileID, TF_BLOCKING))
-	// 	return true;
+	// Don’t allow placing *inside* a wall tile (static wall at exact z)
+	if (CheckStaticFlag(x, y, z, world, TF_WALL))
+		return true;
+
+	// (Optional) also treat dynamic walls as blocked:
+	if (CheckDynamicFlag(x, y, z, world, instance, TF_WALL))
+		return true;
 
 	return false;
 }
