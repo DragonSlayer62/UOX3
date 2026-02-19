@@ -344,6 +344,21 @@ function weightedRandom( min, max )
  	return Math.round( max / ( Math.random() * max + min ));
 }
 
+var highseasFishingRegions = {
+	0: { // normal no region-specific fish distribution, used as default if region not found in table
+		shallow: { fish: "randomfish",	magic: "randommagicfish",	big: "big_fish" },
+		deep:    { fish: "randomfish",	magic: "randommagicfish",	big: "big_fish" },
+		dungeon: { fish: "randomfish",	magic: "randommagicfish",	big: "big_fish" }
+	},
+
+	// Example: Britain region id 3
+	3: {
+		shallow: { fish: "britain_fish_shallow", magic: "britain_magicfish_shallow", big: "britain_bigfish" },
+		deep:    { fish: "britain_fish_deep",    magic: "britain_magicfish_deep",    big: "britain_bigfish" },
+		dungeon: { fish: "britain_fish_dungeon", magic: "britain_magicfish_dungeon", big: "britain_bigfish" }
+	}
+};
+
 /** @type { ( tObject: BaseObject, timerId: number ) => void } */
 function onTimer( fishingTool, timerID )
 {
@@ -599,6 +614,52 @@ function onTimer( fishingTool, timerID )
 						if( mChar.skills.fishing > RandomNumber( 1, 100 ))
 						{
 							fishType == "randomfish";
+						}
+					}
+
+					const coreShardEra = EraStringToNum( GetServerSetting( "CoreShardEra" ));
+					if( coreShardEra >= EraStringToNum( "hs" ))
+					{
+						var fishGroupKey = null;
+
+						if( fishType == "randomfish" )
+						{
+							fishGroupKey = "fish";
+						}
+						else if( fishType == "randommagicfish" )
+						{
+							fishGroupKey = "magic";
+						}
+						else if( fishType == "big_fish" || fishType == "bigfish" )
+						{
+							fishGroupKey = "big";
+						}
+
+						if( fishGroupKey != null )
+						{
+							var waterRegion = GetTownRegionFromXY( targX, targY, mChar.worldnumber, mChar.instanceID );
+							var regionId = 0;
+							if( ValidateObject( waterRegion ))
+							{
+								regionId = waterRegion.id;
+							}
+
+							var contextKey = ( isDeepSeaFishing ? "deep" : "shallow" );
+							if( ValidateObject( waterRegion ) && waterRegion.isDungeon )
+							{
+								contextKey = "dungeon";
+							}
+
+							var table = highseasFishingRegions[ regionId ];
+							if( !table )
+							{
+									table = highseasFishingRegions[0];
+							}
+
+							if( table[contextKey] && table[contextKey][fishGroupKey] )
+							{
+								fishType = table[contextKey][fishGroupKey];
+							}
 						}
 					}
 
