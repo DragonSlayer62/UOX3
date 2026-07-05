@@ -444,9 +444,6 @@ function FindTokunoRedeemableItems( player )
 
 function IsTokunoRedeemableMinorArtifact( item )
 {
-	if( !ValidateObject( item ))
-		return false;
-
 	if( item.GetTag( "ToTArtifact" ) != 1 )
 		return false;
 
