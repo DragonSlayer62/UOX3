@@ -335,6 +335,11 @@
 5302=item/retouchingtool.js
 5303=item/equip_effects/vetrewardtooltips.js
 
+7620=item/tokuno/tokuno_treasures_kills.js
+7621=item/tokuno/tokuno_treasures_collector.js
+7622=item/tokuno/tokuno_treasures_pigments.js
+7623=item/tokuno/tokuno_treasures_items.js
+
 19100=item/plant_growing/plantsystem.js
 19101=item/plant_growing/plantbowl.js
 19102=item/plant_growing/seed.js

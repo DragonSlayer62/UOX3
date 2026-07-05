@@ -99,6 +99,12 @@ function onLogin( socket, pChar )
 		// Show the login quest gump
 		TriggerEvent( 5813, "LoginQuest", pChar );
 	}
+
+	// Treasure of Tokuno Island event script
+	if( coreShardEra >= EraStringToNum( "se" ) && !pChar.HasScriptTrigger( 7620 ))
+	{
+		pChar.AddScriptTrigger( 7620 );
+	}
 }
 
 /** @type { ( sockPlayer: Socket, pPlayer: Character ) => boolean } */
@@ -144,6 +150,12 @@ function onCreatePlayer( pChar )
 	if( coreShardEra >= EraStringToNum( "aos" ) && ( !pChar.npc && !pChar.HasScriptTrigger( 7001 )))
 	{
 		pChar.AddScriptTrigger( 7001 );
+	}
+
+	// Treasure of Tokuno Island event script
+	if( coreShardEra >= EraStringToNum( "se" ) && !pChar.HasScriptTrigger( 7620 ))
+	{
+		pChar.AddScriptTrigger( 7620 );
 	}
 }
 

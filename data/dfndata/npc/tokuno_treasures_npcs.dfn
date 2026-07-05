@@ -1,0 +1,32 @@
+//*****************************************************************
+//*                         UOX3 DFNs                             *
+//* Treasures of Tokuno NPCs                                      *
+//* Script ID used by NPC: 7620                                   *
+//*****************************************************************
+
+[tot_ihara_soko]
+{
+GET=basehuman
+NAME=Ihara Soko
+TITLE=the Imperial Minister of Trade
+ID=0x0190
+SKIN=0x8403
+DIRECTION=S
+NPCWANDER=0
+NPCAI=0
+FLAG=INNOCENT
+FAME=0
+KARMA=0
+STR=100
+DEX=100
+INT=100
+NOTRAIN
+SCRIPT=7621
+CUSTOMINTTAG=ToTIharaSoko 1
+CUSTOMSTRINGTAG=ToTRole TokunoRewardCollector
+// Outfit from the C# source: waraji, backpack, kamishimo and light plate jingasa.
+// Adjust item IDs below if your client art uses different SE equipment IDs.
+EQUIPITEM=0x2797,0x711
+EQUIPITEM=0x279C,0x483
+EQUIPITEM=0x2776,0x711
+}
