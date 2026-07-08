@@ -408,3 +408,14 @@ id=0x3591
 weight=0
 script=5025
 }
+
+[mahjong_gameboard]
+{
+GET=base_item
+NAME=mahjong game board
+ID=0x0FAA
+WEIGHT=50
+TYPE=0
+MOVABLE=1
+SCRIPT=5071
+}

@@ -330,6 +330,8 @@
 5065=item/jacobspickaxe.js
 5070=item/dawns_music_box.js
 
+5071=item/mahjong_gameboard.js
+
 5300=item/etherealstatuettes.js
 5301=npc/pets/dismountetherealmount.js
 5302=item/retouchingtool.js
@@ -555,6 +557,7 @@
 1501=server/network/0x7f_uogatewayServerPoll.js
 1502=server/network/0xa4_classicUoWebIdentity.js
 1503=server/network/0x56_mapPacket.js
+1504=server/network/0xDA_mahjongPacket.js
 }
 
 [CONSOLE_SCRIPTS]
